@@ -1,46 +1,30 @@
 # MNIST-handwritten-text-recognition
 this project has handwritten text recognition implementation.
 
-1. Project Description:
-The objective of this project is to develop a Digit Recognition System using the MNIST dataset. The MNIST (Modified National Institute of Standards and Technology) database is a "hello world" dataset in computer vision, consisting of 70,000 grayscale images of handwritten digits (0–9), each sized at $28 \times 28$ pixels.
+MNIST Handwritten Digit Recognition
+This project implements an Artificial Neural Network (ANN) to classify handwritten digits (0-9) using the classic MNIST dataset. The model is built using Keras and TensorFlow, achieving a test accuracy of approximately 93.18%. 
 
-Technical Stack:
-Deep Learning Framework: Keras (running on TensorFlow).
-Data Manipulation: NumPy.
-Visualization: Matplotlib.
-Image Processing: OpenCV (cv2) and PIL (for custom image testing).
+Project Overview
+The goal of this project is to demonstrate a complete machine learning workflow, from data preprocessing and visualization to model training and real-world image prediction. While basic dense layers are used here, the project highlights the fundamental challenges of image classification, such as data normalization and the "generalization gap" between training and validation performance. 
 
-2. Technical Analysis:
-A. Data Preprocessing:
-The notebook follows standard best practices for preparing image data:
-Loading: It separates the data into 60,000 training images and 10,000 test images.
-Normalization: Pixel values are scaled from the range [0, 255] to [0, 1]. This helps the neural network converge faster during gradient descent.
-One-Hot Encoding: The labels (integers 0–9) are converted into categorical vectors (e.g., 5 becomes [0,0,0,0,0,1,0,0,0,0]) using to_categorical.
-Reshaping: Since the model uses Dense (fully connected) layers rather than Convolutional layers, the 28 times 28 2D images are "flattened" into a 1D vector of 784 pixels.
+Key Features
+Data Pipeline: Automated loading and splitting of the MNIST dataset (60,000 training / 10,000 testing images).
+Normalization: Scales pixel values to a [0, 1] range for faster convergence. 
+ANN Architecture: A multi-layer perceptron with three hidden layers and ReLU activation.
+Evaluation: Visualizes training history (loss and accuracy curves) to monitor for overfitting.
+In-the-Wild Testing: A custom script using OpenCV and PIL to process and predict digits from external URLs. 
 
-B. Model Architecture:
-The project defines a Multilayer Perceptron (MLP). The architecture is as follows:
-Input Layer: 784 neurons (one for each pixel).
-Hidden Layer 1: 10 neurons with ReLU activation.
-Hidden Layer 2: 30 neurons with ReLU activation.
-Hidden Layer 3: 10 neurons with ReLU activation.
-Output Layer: 10 neurons with Softmax activation (outputting probabilities for each of the 10 digits).
-Optimization: The model uses the Adam optimizer with a learning rate of 0.01 and Categorical Crossentropy as the loss function.
+Results:
+After training for 10 epochs with a batch size of 200, the model achieved:
+Training Accuracy: ~93.42%
+Validation Accuracy: ~94.18%
+Test Accuracy: 93.18%
 
-C. Training PerformanceEpochs: 10Batch Size: 200
-Validation Split: 10% of the training data is held back to monitor for overfitting.
-Results: The model achieved a Test Accuracy of ~93.18%.
-Overfitting Check: The notebook includes code to plot Loss and Accuracy. The logs show that validation accuracy remains high (94.18\%), suggesting the model generalizes well for a basic ANN.
+Training Visualization:
+The project generates plots for Loss and Accuracy to help identify if the model starts to overfit during the generalization phase. 
 
-D. External Testing:
-A unique part of this notebook is the "In-the-wild" test. The code:
-Downloads a random image of a digit from a URL.Uses OpenCV to resize it to 28 times 28, convert it to grayscale, and invert the colors (to match the MNIST format of white-on-black).
-Predicts the digit. 
-In the provided output, the model correctly predicted the digit '2'.3. 
+Installation & UsageClone the repository: Bashgit clone https://github.com/your-username/mnist-digit-recognition.git
 
-Observations and Recommendations Scalability:
-The notebook correctly notes in the comments that "Linear NN is NOT scalable when dealing with more complex data.While 93% is good for a simple ANN, a Convolutional Neural Network (CNN) using Conv2D layers would likely push the accuracy above 99%.
+Install dependencies: Bashpip install numpy matplotlib tensorflow opencv-python pillow requests.
 
-Bottleneck Architecture: The first hidden layer has only 10 neurons. This is quite small and acts as a "bottleneck," potentially discarding useful spatial information early on. Increasing the width of the first layer (e.g., to 128 or 512) would improve performance. 
-
-Deprecation Warning: The code uses model.predict_classes(), which is deprecated in newer versions of TensorFlow. It is recommended to use np.argmax(model.predict(img), axis=-1) instead.
+Run the Notebook:Open MNIST_Image_Recognition.ipynb in Jupyter Notebook or Google Colab and run all cells. External Image PredictionThe project includes a utility to test the model on images outside the dataset. It uses cv2 to:Resize images to 28 times 28 pixels. Convert to grayscale. Invert colors to match the MNIST format.
